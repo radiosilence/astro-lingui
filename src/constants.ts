@@ -69,4 +69,4 @@ export const RTL_LOCALES = [
   "arc", // Aramaic
   "azb", // South Azeri
   "rhg", // Rohingya
-];
+] as const;
