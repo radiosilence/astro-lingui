@@ -27,7 +27,9 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
       messages,
     });
 
-    context.locals.isRtl = [...RTL_LOCALES, ""].includes(locale);
+    context.locals.isRtl = !!RTL_LOCALES.find(
+      (rtlLocale) => rtlLocale === locale,
+    );
     context.locals.locales = config.locales;
     context.locals.sourceLocale = config.sourceLocale;
 
