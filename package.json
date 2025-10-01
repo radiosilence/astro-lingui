@@ -32,7 +32,7 @@
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "@lingui/cli": "^5.0.0",
+    "@lingui/cli": "^5.5.0",
     "@lingui/core": "^5.0.0",
     "@lingui/react": "^5.0.0",
     "@lingui/vite-plugin": "^5.0.0",
@@ -45,5 +45,8 @@
     "@types/react": "^18.0.0",
     "tsdown": "^0.4.0",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@astrojs/compiler": "^2.13.0"
   }
 }

@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "astro-lingui",
+      "dependencies": {
+        "@astrojs/compiler": "^2.13.0",
+      },
       "devDependencies": {
         "@tsconfig/node-ts": "^23.6.1",
         "@tsconfig/node24": "^24.0.1",
@@ -11,7 +14,7 @@
         "typescript": "^5.7.2",
       },
       "peerDependencies": {
-        "@lingui/cli": "^5.0.0",
+        "@lingui/cli": "^5.5.0",
         "@lingui/core": "^5.0.0",
         "@lingui/react": "^5.0.0",
         "@lingui/vite-plugin": "^5.0.0",
