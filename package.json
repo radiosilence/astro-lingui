@@ -27,7 +27,7 @@
       "import": "./dist/client.js"
     },
     "./locals": {
-      "types": "./dist/env.d.ts"
+      "types": "./dist/locals.d.ts"
     }
   },
   "files": [
@@ -35,7 +35,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsdown && cp src/env.d.ts dist/env.d.ts",
+    "build": "tsdown && cp src/locals.d.ts dist/locals.d.ts",
     "prepublishOnly": "npm run build",
     "lint:biome": "npx @biomejs/biome check",
     "lint:biome:fix": "npx @biomejs/biome check --write",
