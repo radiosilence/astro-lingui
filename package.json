@@ -28,7 +28,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsdown server.ts client.ts",
+    "build": "tsdown",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
