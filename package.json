@@ -18,6 +18,10 @@
       "types": "./dist/server.d.ts",
       "import": "./dist/server.js"
     },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js"
+    },
     "./client": {
       "types": "./dist/client.d.ts",
       "import": "./dist/client.js"

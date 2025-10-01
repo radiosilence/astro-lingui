@@ -19,7 +19,7 @@ export const integration = ({
       config: astroConfig,
     }) => {
       addMiddleware({
-        entrypoint: "./src/integrations/astro-lingui/middleware",
+        entrypoint: "astro-lingui/middleware",
         order: "pre",
       });
 
