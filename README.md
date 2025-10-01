@@ -91,11 +91,17 @@ export const MyComponent = withI18n(({ locale }: { locale: string }) => {
 });
 ```
 
-**Note**: Macro support (`Trans`, `t`, `msg`) is not available for `.astro` files. Use `i18n._()` with ICU MessageFormat instead.
+**Note**: Macro support (`Trans`, `t`, `msg`) is not available for `.astro` files. Use `i18n._()` directly instead.
 
-### ICU MessageFormat Examples
+### Using i18n.\_() in .astro Files
 
-Since macros don't work in `.astro` files, use `i18n._()` with ICU MessageFormat:
+The custom extractor will pick up `i18n._()` calls from your `.astro` files. After extraction and compilation, you can use ICU MessageFormat features:
+
+**Simple translation**:
+
+```astro
+{i18n._("Welcome to our site")}
+```
 
 **String interpolation**:
 
@@ -103,32 +109,41 @@ Since macros don't work in `.astro` files, use `i18n._()` with ICU MessageFormat
 {i18n._("Hello {name}", { name: userName })}
 ```
 
-**Plurals**:
+**Plurals** (after extraction, edit your .po file to add the ICU format):
 
 ```astro
-{i18n._("{count, plural, one {# item} other {# items}}", { count: items.length })}
+{i18n._("item_count", { count: items.length })}
 ```
 
-**Select**:
+In your compiled message catalog, this becomes:
 
-```astro
-{i18n._("{gender, select, male {He} female {She} other {They}} clicked the link", { gender: user.gender })}
+```
+{count, plural, one {# item} other {# items}}
 ```
 
-**SelectOrdinal**:
+**Select and SelectOrdinal**: Similar workflow - use a simple ID in code, add ICU format in your message catalogs.
 
-```astro
-{i18n._("You finished {place, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}", { place: 3 })}
+**Important**: ICU MessageFormat features (plural, select, etc.) must be added to your compiled message catalogs - they're not written directly in code. The workflow is:
+
+1. Write `i18n._("message.id", { variables })` in your `.astro` files
+2. Run `lingui extract` to pull message IDs into catalogs
+3. Edit catalogs (`.po` files) to add ICU MessageFormat patterns
+4. Run `lingui compile` to generate optimized message files
+5. Messages with ICU patterns will work at runtime
+
+**Injecting React components**: `i18n._()` only returns strings - you can't pass React components as values. For translations with embedded components (like `<a>` tags), use the runtime `Trans` component from `@lingui/react` (NOT the macro version) in your React components:
+
+```tsx
+import { Trans } from "@lingui/react"; // runtime component, not macro
+
+<Trans
+  id="link.message"
+  message="Read <link>the docs</link> for more"
+  components={{ link: <a href="/docs" /> }}
+/>;
 ```
 
-**Complex example**:
-
-```astro
-{i18n._("Mary has {count} {count, plural, one {apple} other {apples}}. Click {link} for more.", {
-  count: 5,
-  link: "here"
-})}
-```
+This is the runtime version that doesn't require macro transformation. You must provide `id` and `message` props explicitly.
 
 ## How it Works
 
