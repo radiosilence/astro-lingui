@@ -32,8 +32,10 @@ export const integration = ({
       updateConfig({
         vite: {
           plugins: [
-            // biome-ignore lint/suspicious/noExplicitAny: lingui types incompatible
-            lingui(linguiOpts) as any,
+            {
+              ...lingui(linguiOpts),
+              enforce: "pre",
+            },
             {
               name: "vite-plugin-astro-lingui-config",
               resolveId(id: string) {
