@@ -1,4 +1,4 @@
-# @radiosilence/astro-lingui
+# astro-lingui
 
 Astro integration for Lingui i18n with virtual modules, automatic RTL detection, and zero-config locale loading.
 
@@ -13,15 +13,16 @@ Astro integration for Lingui i18n with virtual modules, automatic RTL detection,
 ## Install
 
 ```bash
-npm install @radiosilence/astro-lingui @lingui/cli @lingui/core @lingui/react @lingui/vite-plugin
+npm install astro-lingui @lingui/cli @lingui/core @lingui/react @lingui/vite-plugin
 ```
 
 ## Setup
 
 **astro.config.ts**
+
 ```ts
 import { defineConfig } from "astro/config";
-import astroLingui from "@radiosilence/astro-lingui";
+import astroLingui from "astro-lingui/server";
 
 export default defineConfig({
   integrations: [
@@ -35,10 +36,11 @@ export default defineConfig({
 ```
 
 **lingui.config.ts**
+
 ```ts
 import { defineConfig } from "@lingui/cli";
 import linguiApi from "@lingui/cli/api";
-import astroLingui from "@radiosilence/astro-lingui";
+import astroLingui from "astro-lingui/server";
 
 export default defineConfig({
   sourceLocale: "en",
@@ -54,6 +56,13 @@ export default defineConfig({
 });
 ```
 
+**env.d.ts** - Add this reference for TypeScript support:
+
+```ts
+/// <reference types="astro/client" />
+/// <reference types="astro-lingui/env.d.ts" />
+```
+
 ## Usage
 
 **Middleware** automatically loads locale messages and sets RTL context:
@@ -66,7 +75,7 @@ const { isRtl, locales, sourceLocale } = Astro.locals;
 **Client-side React components**:
 
 ```tsx
-import { withI18n } from "@radiosilence/astro-lingui/client";
+import { withI18n } from "astro-lingui/client";
 import { Trans } from "@lingui/react/macro";
 
 export const MyComponent = withI18n(({ locale }: { locale: string }) => {
