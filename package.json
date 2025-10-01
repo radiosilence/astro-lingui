@@ -1,6 +1,6 @@
 {
   "name": "astro-lingui",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "type": "module",
   "description": "Astro integration for Lingui i18n with virtual modules and RTL support",
   "homepage": "https://github.com/radiosilence/astro-lingui#readme",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "author": "James Cleveland <jc@blit.cc>",
   "exports": {
-    ".": {
+    "./server": {
       "types": "./dist/server.d.ts",
       "import": "./dist/server.js"
     },
