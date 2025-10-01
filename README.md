@@ -18,23 +18,6 @@ npm install astro-lingui @lingui/cli @lingui/core @lingui/react @lingui/vite-plu
 
 ## Setup
 
-**astro.config.ts**
-
-```ts
-import { defineConfig } from "astro/config";
-import astroLingui from "astro-lingui/server";
-
-export default defineConfig({
-  integrations: [
-    astroLingui.integration({
-      sourceLocale: "en",
-      locales: ["en", "fr", "de", "ar"],
-      dir: "./src/locales", // relative to project root
-    }),
-  ],
-});
-```
-
 **lingui.config.ts**
 
 ```ts
@@ -42,9 +25,12 @@ import { defineConfig } from "@lingui/cli";
 import linguiApi from "@lingui/cli/api";
 import astroLingui from "astro-lingui/server";
 
+export const locales = ["en-GB", "fr-FR", "ar-PS"];
+export const sourceLocale = "en-GB";
+
 export default defineConfig({
-  sourceLocale: "en-GB",
-  locales: ["en-GB", "fr-FR", "ar-PS"],
+  sourceLocale,
+  locales,
   catalogs: [
     {
       path: "<rootDir>/src/locales/{locale}/messages",
@@ -53,6 +39,24 @@ export default defineConfig({
     },
   ],
   extractors: [linguiApi.extractor, astroLingui.extractor],
+});
+```
+
+**astro.config.ts**
+
+```ts
+import { defineConfig } from "astro/config";
+import astroLingui from "astro-lingui/server";
+import { locales, sourceLocale } from "./lingui.config";
+
+export default defineConfig({
+  integrations: [
+    astroLingui.integration({
+      sourceLocale,
+      locales,
+      dir: "./src/locales", // relative to project root
+    }),
+  ],
 });
 ```
 
