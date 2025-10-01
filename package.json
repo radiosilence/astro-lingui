@@ -1,6 +1,6 @@
 {
   "name": "astro-lingui",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "description": "Astro integration for Lingui i18n with virtual modules and RTL support",
   "homepage": "https://github.com/radiosilence/astro-lingui#readme",
@@ -28,7 +28,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && cp src/env.d.ts dist/env.d.ts",
     "prepublishOnly": "npm run build",
     "lint:biome": "npx @biomejs/biome check",
     "lint:biome:fix": "npx @biomejs/biome check --write",
