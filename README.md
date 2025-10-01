@@ -91,7 +91,44 @@ export const MyComponent = withI18n(({ locale }: { locale: string }) => {
 });
 ```
 
-**Note**: Macro support (`Trans`, `t`, `msg`) is not yet implemented for `.astro` files. Use `i18n._()` for translations.
+**Note**: Macro support (`Trans`, `t`, `msg`) is not available for `.astro` files. Use `i18n._()` with ICU MessageFormat instead.
+
+### ICU MessageFormat Examples
+
+Since macros don't work in `.astro` files, use `i18n._()` with ICU MessageFormat:
+
+**String interpolation**:
+
+```astro
+{i18n._("Hello {name}", { name: userName })}
+```
+
+**Plurals**:
+
+```astro
+{i18n._("{count, plural, one {# item} other {# items}}", { count: items.length })}
+```
+
+**Select**:
+
+```astro
+{i18n._("{gender, select, male {He} female {She} other {They}} clicked the link", { gender: user.gender })}
+```
+
+**SelectOrdinal**:
+
+```astro
+{i18n._("You finished {place, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}", { place: 3 })}
+```
+
+**Complex example**:
+
+```astro
+{i18n._("Mary has {count} {count, plural, one {apple} other {apples}}. Click {link} for more.", {
+  count: 5,
+  link: "here"
+})}
+```
 
 ## How it Works
 
