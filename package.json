@@ -1,6 +1,6 @@
 {
   "name": "astro-lingui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Astro integration for Lingui i18n with virtual modules and RTL support",
   "homepage": "https://github.com/radiosilence/astro-lingui#readme",
   "bugs": {
@@ -23,8 +23,6 @@
       "import": "./dist/client.js"
     }
   },
-  "main": "./dist/server.js",
-  "types": "./dist/server.d.ts",
   "files": [
     "dist",
     "README.md"
