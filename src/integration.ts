@@ -31,6 +31,20 @@ export const integration = ({
 
       updateConfig({
         vite: {
+          optimizeDeps: {
+            exclude: [
+              "virtual:astro-lingui-config",
+              "virtual:astro-lingui-modules",
+            ],
+          },
+          build: {
+            rollupOptions: {
+              external: [
+                "virtual:astro-lingui-config",
+                "virtual:astro-lingui-modules",
+              ],
+            },
+          },
           plugins: [
             {
               ...lingui(linguiOpts),
