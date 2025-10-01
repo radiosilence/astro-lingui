@@ -60,7 +60,7 @@ export default defineConfig({
 
 ```ts
 /// <reference types="astro/client" />
-/// <reference types="astro-lingui/env.d.ts" />
+/// <reference types="astro-lingui/locals" />
 ```
 
 ## Usage
