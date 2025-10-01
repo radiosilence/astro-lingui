@@ -1,0 +1,8 @@
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      run: npm run lint:biome:fix -- --no-errors-on-unmatched {staged_files}
+      stage_fixed: true
+    typecheck:
+      run: npm run typecheck

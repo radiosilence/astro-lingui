@@ -1,6 +1,7 @@
 {
   "name": "astro-lingui",
-  "version": "0.0.4",
+  "version": "0.0.5",
+  "type": "module",
   "description": "Astro integration for Lingui i18n with virtual modules and RTL support",
   "homepage": "https://github.com/radiosilence/astro-lingui#readme",
   "bugs": {
@@ -12,7 +13,6 @@
   },
   "license": "MIT",
   "author": "James Cleveland <jc@blit.cc>",
-  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/server.d.ts",
@@ -29,7 +29,10 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "lint:biome": "npx @biomejs/biome check",
+    "lint:biome:fix": "npx @biomejs/biome check --write",
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "@lingui/cli": "^5.5.0",
@@ -40,6 +43,7 @@
     "react": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.4",
     "@tsconfig/node-ts": "^23.6.1",
     "@tsconfig/node24": "^24.0.1",
     "@types/react": "^18.0.0",

@@ -25,7 +25,7 @@ export const extractor: ExtractorType = {
       `${filename}.tsx`,
       tsxCode,
       onMessageExtracted,
-      { ...ctx, sourceMaps: map },
+      { linguiConfig: ctx?.linguiConfig!, sourceMaps: map },
     );
   },
 };

@@ -1,3 +1,5 @@
+/// <reference types="astro/client" />
+
 declare module "virtual:astro-lingui-config" {
   interface LinguiConfig {
     dir: string;
@@ -18,10 +20,7 @@ declare module "virtual:astro-lingui-modules" {
   >;
 }
 
-namespace App {
-  /**
-   * Used by middlewares to store information, that can be read by the user via the global `Astro.locals`
-   */
+declare namespace App {
   export interface Locals {
     isRtl: boolean;
     locales: string[];
