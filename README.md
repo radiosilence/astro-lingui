@@ -141,8 +141,7 @@ In your compiled message catalog, this becomes:
 import { Trans } from "@lingui/react"; // runtime component, not macro
 
 <Trans
-  id="link.message"
-  message="Read <link>the docs</link> for more"
+  id="Read <link>the docs</link> for more"
   components={{ link: <a href="/docs" /> }}
 />;
 ```
