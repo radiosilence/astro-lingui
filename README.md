@@ -65,33 +65,33 @@ export default defineConfig({
 
 ## Usage
 
-**Middleware** automatically loads locale messages and sets RTL context:
+**In Astro pages/components**:
 
-```ts
-// Available in all pages via Astro.locals
+```astro
+---
+import { i18n } from "@lingui/core";
+
+// Access locale info via Astro.locals
 const { isRtl, locales, sourceLocale } = Astro.locals;
+---
+
+<h1 dir={isRtl ? "rtl" : "ltr"}>
+  {i18n._("Welcome")}
+</h1>
 ```
 
 **Client-side React components**:
 
 ```tsx
 import { withI18n } from "astro-lingui/client";
-import { Trans } from "@lingui/react/macro";
+import { i18n } from "@lingui/core";
 
 export const MyComponent = withI18n(({ locale }: { locale: string }) => {
-  return <Trans>Hello World</Trans>;
+  return <h1>{i18n._("Hello World")}</h1>;
 });
 ```
 
-**In Astro pages**:
-
-```astro
----
-import { Trans } from "@lingui/react/macro";
----
-
-<Trans>Welcome</Trans>
-```
+**Note**: Macro support (`Trans`, `t`, `msg`) is not yet implemented for `.astro` files. Use `i18n._()` for translations.
 
 ## How it Works
 
