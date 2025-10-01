@@ -19,13 +19,15 @@ export const extractor: ExtractorType = {
   async extract(filename, code, onMessageExtracted, ctx) {
     console.log("converting to tsx", filename);
     const { code: tsxCode, map } = await convertToTSX(code);
-
+    if (!ctx?.linguiConfig) {
+      throw new Error("Lingui config not found");
+    }
     console.log("extracting", tsxCode);
     return linguiApi.extractor.extract(
       `${filename}.tsx`,
       tsxCode,
       onMessageExtracted,
-      { linguiConfig: ctx?.linguiConfig!, sourceMaps: map },
+      { linguiConfig: ctx?.linguiConfig, sourceMaps: map },
     );
   },
 };
