@@ -43,8 +43,8 @@ import linguiApi from "@lingui/cli/api";
 import astroLingui from "astro-lingui/server";
 
 export default defineConfig({
-  sourceLocale: "en",
-  locales: ["en", "fr", "de", "ar"],
+  sourceLocale: "en-GB",
+  locales: ["en-GB", "fr-FR", "ar-PS"],
   catalogs: [
     {
       path: "<rootDir>/src/locales/{locale}/messages",
