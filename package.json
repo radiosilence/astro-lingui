@@ -1,0 +1,51 @@
+{
+  "name": "astro-lingui",
+  "version": "0.0.2",
+  "description": "Astro integration for Lingui i18n with virtual modules and RTL support",
+  "homepage": "https://github.com/radiosilence/astro-lingui#readme",
+  "bugs": {
+    "url": "https://github.com/radiosilence/astro-lingui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/radiosilence/astro-lingui.git"
+  },
+  "license": "MIT",
+  "author": "James Cleveland <jc@blit.cc>",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    }
+  },
+  "main": "./dist/server.js",
+  "types": "./dist/server.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsdown server.ts client.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@lingui/cli": "^5.0.0",
+    "@lingui/core": "^5.0.0",
+    "@lingui/react": "^5.0.0",
+    "@lingui/vite-plugin": "^5.0.0",
+    "astro": "^5.0.0",
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node-ts": "^23.6.1",
+    "@tsconfig/node24": "^24.0.1",
+    "@types/react": "^18.0.0",
+    "tsdown": "^0.4.0",
+    "typescript": "^5.7.2"
+  }
+}
