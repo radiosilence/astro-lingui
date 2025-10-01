@@ -34,7 +34,6 @@ export const integration = ({
           plugins: [
             {
               ...lingui(linguiOpts),
-              enforce: "pre",
             },
             {
               name: "vite-plugin-astro-lingui-config",
