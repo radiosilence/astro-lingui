@@ -56,7 +56,6 @@ export const integration = ({
                   const globPattern = config.path
                     .replace("<rootDir>/", "/")
                     .replace("{locale}", "*");
-                  console.error("globPattern", globPattern);
                   return `export const localeModules = import.meta.glob(${JSON.stringify(globPattern)});`;
                 }
               },
