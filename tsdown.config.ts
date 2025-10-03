@@ -5,5 +5,11 @@ export default defineConfig({
   format: ["esm"],
   dts: true,
   clean: true,
-  external: [/^virtual:.*/, /^astro:.*/],
+  external: [
+    /^virtual:.*/,
+    /^@lingui\/.*/,
+    /^@astrojs\/.*/,
+    /^astro.*/,
+    /^react.*/,
+  ],
 });
