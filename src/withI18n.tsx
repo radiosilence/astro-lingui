@@ -12,8 +12,10 @@ export function withI18n<P extends object>(
     const activated = useRef(false);
     if (!activated.current) {
       // Normalize path to match glob pattern
-      const normalized = config.dir.replace(/^\.\//, "/");
-      const modulePath = `${normalized}/${props.locale}/messages.ts`;
+      const modulePath = config.path
+        .replace("<rootDir>", "")
+        .replace("{locale}", props.locale);
+      console.error("withi18n", { modulePath });
       const loader = localeModules[modulePath];
 
       if (!loader) {

@@ -24,10 +24,7 @@ export const integration = ({
       });
 
       // Resolve to absolute path for Node imports (middleware)
-      const localesDirAbsolute = path.resolve(
-        astroConfig.root.pathname,
-        config.dir,
-      );
+      const rootDir = path.resolve(astroConfig.root.pathname);
 
       updateConfig({
         vite: {
@@ -63,7 +60,8 @@ export const integration = ({
                 if (id === "\0virtual:astro-lingui-config") {
                   const exportedConfig = {
                     ...config,
-                    localesDir: localesDirAbsolute,
+                    path,
+                    rootDir,
                   };
                   return `export default ${JSON.stringify(exportedConfig, null, 2)};`;
                 }

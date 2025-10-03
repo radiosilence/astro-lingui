@@ -1,14 +1,14 @@
 /// <reference types="astro/client" />
 
 declare module "virtual:astro-lingui-config" {
-  interface LinguiConfig {
-    dir: string;
-    localesDir: string;
+  interface AstroLinguiConfig {
+    path: string;
+    rootDir: string;
     sourceLocale: string;
     locales: string[];
   }
 
-  const config: LinguiConfig;
+  const config: AstroLinguiConfig;
   export default config;
 }
 

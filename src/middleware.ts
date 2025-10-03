@@ -9,11 +9,14 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
   async (context, next) => {
     const { locale = config.sourceLocale } = context.params;
 
-    // Normalize path to match glob pattern
-    const normalized = config.dir.replace(/^\.\//, "/");
-    const modulePath = `${normalized}/${locale}/messages.ts`;
+    const modulePath = config.path
+      .replace("<rootDir>", config.rootDir)
+      .replace("{locale}", locale);
+    console.error("middleware", { modulePath });
+    console.log("localeModules", localeModules);
     const loader = localeModules[modulePath];
 
+    console.log("loader", loader);
     if (!loader) {
       throw new Error(
         `No locale messages found for: ${locale} (${modulePath})`,
@@ -22,6 +25,8 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
 
     const { messages } = await loader();
 
+    console.log("message", messages);
+    console.log("loading and activating", locale);
     i18n.loadAndActivate({
       locale,
       messages,
