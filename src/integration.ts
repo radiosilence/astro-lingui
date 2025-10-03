@@ -1,4 +1,4 @@
-import path from "node:path";
+import { resolve } from "node:path";
 import { type LinguiPluginOpts, lingui } from "@lingui/vite-plugin";
 import type { AstroIntegration } from "astro";
 
@@ -9,7 +9,7 @@ export const integration = ({
   lingui?: LinguiPluginOpts;
   locales: string[];
   sourceLocale: string;
-  dir: string;
+  path: string;
 }): AstroIntegration => ({
   name: "astro-lingui",
   hooks: {
@@ -24,7 +24,7 @@ export const integration = ({
       });
 
       // Resolve to absolute path for Node imports (middleware)
-      const rootDir = path.resolve(astroConfig.root.pathname);
+      const rootDir = resolve(astroConfig.root.pathname);
 
       updateConfig({
         vite: {
@@ -60,15 +60,17 @@ export const integration = ({
                 if (id === "\0virtual:astro-lingui-config") {
                   const exportedConfig = {
                     ...config,
-                    path,
                     rootDir,
                   };
+                  console.error("exportedConfig", exportedConfig);
                   return `export default ${JSON.stringify(exportedConfig, null, 2)};`;
                 }
                 if (id === "\0virtual:astro-lingui-modules") {
                   // Normalize path for Vite glob: /src/locales/*/messages.ts
-                  const normalized = config.dir.replace(/^\.\//, "/");
-                  const globPattern = `${normalized}/*/messages.ts`;
+                  const globPattern = config.path
+                    .replace("<rootDir>/", "/")
+                    .replace("{locale}", "*");
+                  console.error("globPattern", globPattern);
                   return `export const localeModules = import.meta.glob(${JSON.stringify(globPattern)});`;
                 }
               },

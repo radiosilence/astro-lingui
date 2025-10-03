@@ -11,11 +11,11 @@ export function withI18n<P extends object>(
   return (props: P & { locale: string }): ReactElement => {
     const activated = useRef(false);
     if (!activated.current) {
-      // Normalize path to match glob pattern
+      console.log("config", config);
       const modulePath = config.path
         .replace("<rootDir>", "")
         .replace("{locale}", props.locale);
-      console.error("withi18n", { modulePath });
+      console.error("withi18n", { modulePath, localeModules });
       const loader = localeModules[modulePath];
 
       if (!loader) {

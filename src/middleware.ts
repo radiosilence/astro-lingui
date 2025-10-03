@@ -10,7 +10,7 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
     const { locale = config.sourceLocale } = context.params;
 
     const modulePath = config.path
-      .replace("<rootDir>", config.rootDir)
+      .replace("<rootDir>", "")
       .replace("{locale}", locale);
     console.error("middleware", { modulePath });
     console.log("localeModules", localeModules);
@@ -35,9 +35,12 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
     context.locals.isRtl = !!RTL_LOCALES.find(
       (rtlLocale) => rtlLocale === locale,
     );
+
     context.locals.locales = config.locales;
     context.locals.sourceLocale = config.sourceLocale;
 
+    console.log("context.locals", context.locals);
+    console.log("i18n.locale", i18n.locale);
     return next();
   },
 );
