@@ -12,11 +12,11 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
     const modulePath = config.path
       .replace("<rootDir>", "")
       .replace("{locale}", locale);
-    console.error("middleware", { modulePath });
-    console.log("localeModules", localeModules);
+    // console.error("middleware", { modulePath });
+    // console.log("localeModules", localeModules);
     const loader = localeModules[modulePath];
 
-    console.log("loader", loader);
+    // console.log("loader", loader);
     if (!loader) {
       throw new Error(
         `No locale messages found for: ${locale} (${modulePath})`,
@@ -25,8 +25,8 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
 
     const { messages } = await loader();
 
-    console.log("message", messages);
-    console.log("loading and activating", locale);
+    // console.log("message", messages);
+    console.log("[middleware] loading and activating", locale);
     i18n.loadAndActivate({
       locale,
       messages,
@@ -39,8 +39,6 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
     context.locals.locales = config.locales;
     context.locals.sourceLocale = config.sourceLocale;
 
-    console.log("context.locals", context.locals);
-    console.log("i18n.locale", i18n.locale);
     return next();
   },
 );
