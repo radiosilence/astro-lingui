@@ -1,6 +1,6 @@
 // Comprehensive list of RTL (Right-to-Left) language codes
 // Based on languages using RTL scripts: Arabic, Hebrew, Persian, Urdu, Pashto, Kurdish, Sindhi, etc.
-export const RTL_LOCALES = [
+const RTL_LOCALES = [
   // Arabic (ar) - ~422M speakers
   "ar",
   "ar-AE",
@@ -70,3 +70,9 @@ export const RTL_LOCALES = [
   "azb", // South Azeri
   "rhg", // Rohingya
 ] as const;
+
+const RTL_SET = new Set<string>(RTL_LOCALES);
+
+export function isRtlLocale(locale: string): boolean {
+  return RTL_SET.has(locale);
+}

@@ -22,6 +22,7 @@ declare module "virtual:astro-lingui-modules" {
 
 declare namespace App {
   export interface Locals {
+    locale: string;
     isRtl: boolean;
     locales: string[];
     sourceLocale: string;

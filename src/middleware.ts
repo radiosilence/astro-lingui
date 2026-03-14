@@ -3,7 +3,7 @@ import config from "virtual:astro-lingui-config";
 import { localeModules } from "virtual:astro-lingui-modules";
 import { i18n } from "@lingui/core";
 import type { MiddlewareHandler } from "astro";
-import { RTL_LOCALES } from "./constants";
+import { isRtlLocale } from "./constants";
 
 export const onRequest: MiddlewareHandler = defineMiddleware(
   async (context, next) => {
@@ -27,10 +27,8 @@ export const onRequest: MiddlewareHandler = defineMiddleware(
       messages,
     });
 
-    context.locals.isRtl = !!RTL_LOCALES.find(
-      (rtlLocale) => rtlLocale === locale,
-    );
-
+    context.locals.locale = locale;
+    context.locals.isRtl = isRtlLocale(locale);
     context.locals.locales = config.locales;
     context.locals.sourceLocale = config.sourceLocale;
 

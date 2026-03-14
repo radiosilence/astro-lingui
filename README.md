@@ -2,12 +2,14 @@
 
 Astro integration for Lingui i18n with virtual modules, automatic RTL detection, and zero-config locale loading.
 
+Supports Astro 5 and 6, Lingui 5.5+, React 19. Requires Node 22+.
+
 ## Features
 
 - **Virtual module system** - Dynamic locale loading via Vite globs, works in SSG and client-side
 - **RTL support** - Automatic detection for 40+ RTL locales (Arabic, Hebrew, Persian, etc.)
 - **Custom extractor** - Extract i18n strings from `.astro` files
-- **React integration** - `withI18n` HOC for client-side components
+- **React integration** - `withI18n` HOC for client-side components with Suspense support
 - **Type-safe** - Full TypeScript support with virtual module declarations
 
 ## Install
@@ -54,7 +56,7 @@ export default defineConfig({
     astroLingui.integration({
       sourceLocale,
       locales,
-      dir: "./src/locales", // relative to project root
+      path: "<rootDir>/src/locales/{locale}/messages",
     }),
   ],
 });
@@ -75,8 +77,7 @@ export default defineConfig({
 ---
 import { i18n } from "@lingui/core";
 
-// Access locale info via Astro.locals
-const { isRtl, locales, sourceLocale } = Astro.locals;
+const { locale, isRtl, locales, sourceLocale } = Astro.locals;
 ---
 
 <h1 dir={isRtl ? "rtl" : "ltr"}>
@@ -85,6 +86,18 @@ const { isRtl, locales, sourceLocale } = Astro.locals;
 ```
 
 **Client-side React components**:
+
+`withI18n` uses React 19's `use()` hook, so components must be wrapped in a `<Suspense>` boundary:
+
+```astro
+---
+import { MyComponent } from "../components/MyComponent";
+---
+
+<Suspense fallback={<p>Loading...</p>}>
+  <MyComponent locale={Astro.locals.locale} client:load />
+</Suspense>
+```
 
 ```tsx
 import { withI18n } from "astro-lingui/client";
@@ -95,11 +108,11 @@ export const MyComponent = withI18n(({ locale }: { locale: string }) => {
 });
 ```
 
-**Note**: Macro support (`Trans`, `t`, `msg`) is not available for `.astro` files. Use `i18n._()` directly instead.
+**Note**: Macro support (`Trans`, `t`, `msg`) is not available for `.astro` files. Use `i18n._()` directly instead. Macros work normally in `.tsx` files.
 
 ### Using i18n.\_() in .astro Files
 
-The custom extractor will pick up `i18n._()` calls from your `.astro` files. After extraction and compilation, you can use ICU MessageFormat features:
+The custom extractor picks up `i18n._()` calls from `.astro` files. After extraction and compilation, ICU MessageFormat features are available:
 
 **Simple translation**:
 
@@ -125,20 +138,17 @@ In your compiled message catalog, this becomes:
 {count, plural, one {# item} other {# items}}
 ```
 
-**Select and SelectOrdinal**: Similar workflow - use a simple ID in code, add ICU format in your message catalogs.
+**Workflow**:
 
-**Important**: ICU MessageFormat features (plural, select, etc.) must be added to your compiled message catalogs - they're not written directly in code. The workflow is:
-
-1. Write `i18n._("message.id", { variables })` in your `.astro` files
+1. Write `i18n._("message.id", { variables })` in `.astro` files
 2. Run `lingui extract` to pull message IDs into catalogs
 3. Edit catalogs (`.po` files) to add ICU MessageFormat patterns
 4. Run `lingui compile` to generate optimized message files
-5. Messages with ICU patterns will work at runtime
 
-**Injecting React components**: `i18n._()` only returns strings - you can't pass React components as values. For translations with embedded components (like `<a>` tags), use the runtime `Trans` component from `@lingui/react` (NOT the macro version) in your React components:
+**Injecting React components**: `i18n._()` only returns strings. For translations with embedded components, use the runtime `Trans` component from `@lingui/react` in your React components:
 
 ```tsx
-import { Trans } from "@lingui/react"; // runtime component, not macro
+import { Trans } from "@lingui/react";
 
 <Trans
   id="Read <link>the docs</link> for more"
@@ -146,16 +156,14 @@ import { Trans } from "@lingui/react"; // runtime component, not macro
 />;
 ```
 
-This is the runtime version that doesn't require macro transformation. You must provide `id` and `message` props explicitly.
-
 ## How it Works
 
 The integration creates two virtual modules:
 
-- `virtual:astro-lingui-config` - Config with absolute/relative paths
+- `virtual:astro-lingui-config` - Config with resolved paths
 - `virtual:astro-lingui-modules` - Vite glob imports for locale message files
 
-This approach allows the same locale files to be loaded both server-side (during SSG) and client-side (lazy-loaded) without hardcoding paths.
+Locale files load server-side during SSG and client-side via lazy loading, without hardcoding paths.
 
 ## License
 

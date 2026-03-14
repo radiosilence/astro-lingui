@@ -48,7 +48,6 @@ export const integration = ({
                     ...config,
                     rootDir,
                   };
-                  console.error("exportedConfig", exportedConfig);
                   return `export default ${JSON.stringify(exportedConfig, null, 2)};`;
                 }
                 if (id === "\0virtual:astro-lingui-modules") {
