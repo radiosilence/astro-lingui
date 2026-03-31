@@ -1,18 +1,22 @@
 {
   "name": "astro-lingui",
   "version": "0.1.0",
-  "type": "module",
   "description": "Astro integration for Lingui i18n with virtual modules and RTL support",
   "homepage": "https://github.com/radiosilence/astro-lingui#readme",
   "bugs": {
     "url": "https://github.com/radiosilence/astro-lingui/issues"
   },
+  "license": "MIT",
+  "author": "James Cleveland <jc@blit.cc>",
   "repository": {
     "type": "git",
     "url": "git://github.com/radiosilence/astro-lingui.git"
   },
-  "license": "MIT",
-  "author": "James Cleveland <jc@blit.cc>",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "type": "module",
   "exports": {
     "./server": {
       "types": "./dist/server.d.ts",
@@ -30,19 +34,25 @@
       "types": "./dist/locals.d.ts"
     }
   },
-  "files": [
-    "dist",
-    "README.md"
-  ],
   "scripts": {
     "build": "tsdown && cp src/locals.d.ts dist/locals.d.ts",
     "prepublishOnly": "npm run build",
-    "lint:biome": "npx @biomejs/biome check",
-    "lint:biome:fix": "npx @biomejs/biome check --write",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
     "typecheck": "tsc --noEmit"
   },
-  "engines": {
-    "node": ">=22.0.0"
+  "dependencies": {
+    "@astrojs/compiler": "^2.13.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.1",
+    "@types/react": "^19.0.0",
+    "oxfmt": "^0.42.0",
+    "oxlint": "^1.57.0",
+    "tsdown": "^0.4.0",
+    "typescript": "^5.7.2"
   },
   "peerDependencies": {
     "@lingui/cli": "^5.5.0",
@@ -52,14 +62,7 @@
     "astro": "^5.0.0 || ^6.0.0",
     "react": "^19.0.0"
   },
-  "devDependencies": {
-    "@biomejs/biome": "^2.2.4",
-    "@tsconfig/node24": "^24.0.1",
-    "@types/react": "^19.0.0",
-    "tsdown": "^0.4.0",
-    "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "@astrojs/compiler": "^2.13.0"
+  "engines": {
+    "node": ">=22.0.0"
   }
 }
