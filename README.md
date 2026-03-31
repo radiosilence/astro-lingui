@@ -165,6 +165,20 @@ The integration creates two virtual modules:
 
 Locale files load server-side during SSG and client-side via lazy loading, without hardcoding paths.
 
+## Development
+
+```bash
+bun install          # install dependencies
+npm run lint         # oxlint
+npm run lint:fix     # oxlint --fix
+npm run format       # oxfmt
+npm run format:check # oxfmt --check
+npm run typecheck    # tsc --noEmit
+npm run build        # tsdown
+```
+
+Pre-commit hooks (via lefthook) run oxlint, oxfmt, and typecheck automatically.
+
 ## License
 
 MIT
